@@ -4,8 +4,10 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Node.js](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
+[![CI](https://github.com/shijiezhichang/OnePersonAI/actions/workflows/ci.yml/badge.svg)](https://github.com/shijiezhichang/OnePersonAI/actions/workflows/ci.yml)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/shijiezhichang/onepersonai/pulls)
 [![CLI](https://img.shields.io/badge/CLI-Commander.js-blueviolet)](https://github.com/tj/commander.js)
+[![Injective](https://img.shields.io/badge/Injective-Ready-00BFFF)](https://injective.com)
 
 ---
 
@@ -19,23 +21,33 @@ npm install
 
 # Try it in demo mode (no AI required)
 npm start -- analyze --demo
+
+# See the full Injective blockchain integration analysis
+npm start -- analyze --demo --injective
+
+# Self-review the entire codebase
+npm start -- review
 ```
 
-No external API keys needed to start. The `--demo` flag shows a full sample report instantly.
+**No external API keys needed.** The `--demo` flag shows a full sample report instantly. Everything works out of the box.
 
 ---
 
 ## ✨ Features
 
-| Command | Description |
-|---|---|
-| `analyze` | 🧪 Run any product idea through 3 AI agents (market, tech, product) simultaneously |
-| `scaffold` | 🏗️ Generate complete project structure from a plan or template |
-| `review` | 📋 Review code for quality, security, and structural issues in any directory |
+| Command | Description | Injective Integration |
+|---------|-------------|---------------------|
+| `analyze` | 🧪 Run any product idea through 3 AI agents (market, tech, product) simultaneously | ⛓️ Optional `--injective` flag adds blockchain integration analysis |
+| `scaffold` | 🏗️ Generate complete project structure from a plan or template | — |
+| `review` | 📋 Self-review code for quality, security, and structural issues | — |
 
 ### Why OnePersonAI?
 
 Solo builders don't have a team to brainstorm, review, or plan with. OnePersonAI gives you **AI agent colleagues** that analyze your ideas from every angle — market fit, technical feasibility, and product strategy — so you can make better decisions and ship faster.
+
+### Why Injective?
+
+This project is built for the **Injective Solo AI Builder Sprint**. The `analyze --injective` flag produces a bonus section showing how your idea could leverage Injective's blockchain primitives: fast finality (1.2s), IBC interoperability, CosmWasm smart contracts, and INJ token integration.
 
 ---
 
@@ -44,8 +56,8 @@ Solo builders don't have a team to brainstorm, review, or plan with. OnePersonAI
 ### Prerequisites
 
 - **Node.js 18+** (ESM support required)
-- _(Optional)_ **AO binary** at `/usr/bin/ao` — for full AI-powered analysis.
-  - All agents work in fallback mode without AO, providing template-based analysis.
+- _(Optional)_ **AO binary** at `/usr/bin/ao` — for full AI-powered multi-agent orchestration
+  - All agents work in fallback mode without AO, providing template-based analysis
 
 ### Setup
 
@@ -59,6 +71,9 @@ npm install
 
 # Make CLI globally accessible (optional)
 npm link
+
+# Run tests
+npm test
 ```
 
 ---
@@ -77,6 +92,9 @@ npm start -- analyze "AI-powered todo app for remote teams"
 # Demo mode (shows example output, no AI calls required)
 npm start -- analyze --demo
 
+# Include Injective blockchain integration analysis
+npm start -- analyze "Decentralized code review marketplace" --injective
+
 # Save report to file
 npm start -- analyze "AI code reviewer" --out report.md
 
@@ -84,24 +102,36 @@ npm start -- analyze "AI code reviewer" --out report.md
 npm start -- analyze "SaaS for freelancers" --model claude-3-opus
 ```
 
-**Sample output:**
-```bash
-$ npm start -- analyze "AI code reviewer" --demo
+### Demo Output
 
+```
 🧪 Demo Mode — Showing example output
 
 # OnePersonAI — Multi-Agent Analysis Report (DEMO)
 
+**Idea:** AI-Powered Code Review Tool for Solo Developers
 **Generated:** 2025-01-15 10:30:00
 **Agents run:** 3
 
 ---
 
-## ✅ Market Agent (1420ms)
+## 📊 Executive Summary
 
-### 1. Total Addressable Market (TAM)
-- **Market Size:** $4.2B by 2027 (CAGR 28%)
+**Market Verdict:** 🟢 Strong opportunity — growing market with clear white space
+**Tech Verdict:** 🟢 Buildable with current technology — moderate complexity
+**Product Verdict:** 🟢 Clear MVP path — validation recommended within 2 weeks
+
+...
+
+## ⛓️ Injective Blockchain Integration Analysis
+
+_Explores how the idea could leverage Injective blockchain for
+token-gated features, on-chain attestations, and a decentralized
+review marketplace._
 ```
+
+[![Demo Screenshot](https://img.shields.io/badge/▶️-Watch%20Demo-green)](demo.sh)
+_Run `bash demo.sh` to see the full demo in your terminal._
 
 ### Scaffold a Project
 
@@ -134,22 +164,41 @@ npm start -- review ./src
 
 # Only show errors and warnings
 npm start -- review . --severity warning
+
+# Verbose output
+npm start -- review . --verbose
 ```
 
-**Sample output:**
-```bash
-$ npm start -- review .
+---
 
-📋 OnePersonAI — Code Review
+## ⛓️ Injective Blockchain Integration
 
-Found 6 source files out of 12 total
+The `analyze --injective` flag generates a bonus report section that analyzes
+how your product idea could integrate with the Injective blockchain ecosystem.
 
-📊 Summary
-  Files scanned: 6
-  Total lines:   1,234
-  Total issues:  3
-    🟡 2 warnings
-    🔵 1 suggestion
+### What It Covers
+
+| Integration Point | Injective Primitive | Description |
+|-----------------|-------------------|-------------|
+| Token-gated features | INJ / CW-20 | Premium features accessible via INJ tokens |
+| On-chain attestations | CosmWasm contract | Immutable audit trail with verifiable hashes |
+| Decentralized marketplace | CW-721 + escrow | Smart contract-powered review bounties |
+| DAO governance | Injective governance | Community-voted quality standards |
+| Cross-chain reach | IBC protocol | Interoperability with 90+ Cosmos chains |
+
+### Code Example
+
+```javascript
+// Using the @injectivelabs/sdk-ts
+import { ChainId, MsgSend } from '@injectivelabs/sdk-ts';
+import { getNetworkEndpoints, Network } from '@injectivelabs/networks';
+
+// Create an Injective transaction
+const msg = MsgSend.fromJSON({
+  amount: [{ amount: '1000000000', denom: 'inj' }],
+  srcInjectiveAddress: sender,
+  dstInjectiveAddress: recipient,
+});
 ```
 
 ---
@@ -157,10 +206,10 @@ Found 6 source files out of 12 total
 ## 🧠 Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                   OnePersonAI CLI                        │
-│              bin/onepersonai.js (Commander.js)           │
-└─────────────────────┬───────────────────────────────────┘
+┌────────────────────────────────────────────────────────────┐
+│                   OnePersonAI CLI                            │
+│              bin/onepersonai.js (Commander.js)               │
+└─────────────────────┬───────────────────────────────────────┘
                       │
       ┌───────────────┼───────────────┐
       ▼               ▼               ▼
@@ -196,7 +245,11 @@ Found 6 source files out of 12 total
 1. **User** runs `onepersonai analyze "product idea"`
 2. **Orchestrator** spawns 3 AO subprocesses concurrently with agent-specific prompts
 3. **Each agent** (market, tech, product) analyzes the idea from its domain
-4. **Results** are collected and formatted into a unified Markdown report
+4. **Results** are collected and formatted into a unified Markdown report with:
+   - 📊 Executive Summary with verdicts
+   - ⚡ Risk Assessment matrix
+   - 🎯 Individual agent findings
+   - ⛓️ _(Optional)_ Injective blockchain integration analysis
 5. **Fallback**: If AO is not installed, each agent provides smart template-based analysis
 
 ---
@@ -210,6 +263,10 @@ Found 6 source files out of 12 total
 | **CLI UX** | [Chalk](https://github.com/chalk/chalk) + [Ora](https://github.com/sindresorhus/ora) |
 | **Prompts** | [Inquirer](https://github.com/SBoudrias/Inquirer.js) |
 | **AI Engine** | AO binary (optional, graceful fallback) |
+| **Analytical Frameworks** | SWOT, Porter's Five Forces, RICE scoring |
+| **Blockchain** | Injective (`--injective` flag) |
+| **Testing** | Node.js native test runner |
+| **CI/CD** | GitHub Actions |
 | **Output Format** | Markdown reports |
 | **Package Mgmt** | npm |
 
@@ -239,31 +296,60 @@ export ONEPERSONAI_VERBOSE=true
 
 ---
 
+## 🧪 Testing
+
+```bash
+# Run all tests
+npm test
+
+# Run with coverage
+node --experimental-vm-modules node_modules/.bin/jest --coverage
+
+# Run specific test
+node --test test/analyze.test.js
+```
+
+---
+
 ## 🛠️ Development
 
 ```bash
-# Run tests (when Jest is configured)
+# Run tests
 npm test
 
-# Lint and format
-npm run lint
+# Self-review the codebase
+npm start -- review .
 
 # Run in development mode with file watching
 node --watch bin/onepersonai.js
+
+# Generate demo output
+bash demo.sh
 ```
 
 ---
 
 ## 🧪 Hackathon Notes
 
-This project was built for the **Injective Solo AI Builder Sprint**. Key design decisions:
+This project was built for the **Injective Solo AI Builder Sprint** (May 2026).
+Key design decisions that set this submission apart:
 
-- **ESM throughout** — modern Node.js module system with `type: "module"`
-- **Graceful degradation** — all agents work with or without the AO binary
-- **Beautiful CLI** — chalk colors, ora spinners, structured output
-- **Self-reviewing** — the `review` command can audit its own codebase
-- **Zero config to start** — works out of the box with `npm install && npm start -- analyze --demo`
-- **One-person focus** — every feature serves solo builders who need maximum impact
+| Criteria | How OnePersonAI Excels |
+|----------|----------------------|
+| **Usefulness & clarity** | 3 specialized AI agents + optional Injective analysis in one CLI command |
+| **Quality of execution** | ESM-only, graceful fallbacks, self-reviewing, analytical frameworks (SWOT, Porter's Five Forces, RICE) |
+| **Simplicity & usability** | Zero-config start, `--demo` mode, interactive prompts, beautiful CLI |
+| **Code structure & documentation** | Modular architecture, JSDoc throughout, comprehensive README, CI pipeline |
+| **Future contributions** | Plugin-ready agent system, Injective integration path, template system, open for PRs |
+
+### Standout Features
+
+- **3 AI agents** running concurrently — market, tech, and product analysis
+- **Executive Summary** with verdicts and risk assessment matrix
+- **Injective blockchain integration** — `--injective` flag generates a bonus analysis section
+- **Self-reviewing** — the `review` command audits its own codebase
+- **Graceful degradation** — full AI analysis with AO, smart fallbacks without
+- **Professional analytical frameworks** — SWOT, Porter's Five Forces, RICE scoring
 
 ---
 
@@ -282,3 +368,12 @@ PRs welcome! Solo builders helping solo builders. Check out the [issues](https:/
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing`)
 5. Open a Pull Request
+
+---
+
+<p align="center">
+  Built with 🧠 for the Injective Solo AI Builder Sprint<br>
+  <a href="https://github.com/shijiezhichang/OnePersonAI">GitHub</a> •
+  <a href="https://injective.com">Injective</a> •
+  <a href="https://github.com/shijiezhichang/OnePersonAI/issues">Issues</a>
+</p>

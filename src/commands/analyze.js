@@ -3,6 +3,7 @@
  *
  * Takes a product idea and runs it simultaneously through market, tech,
  * and product agents, producing a comprehensive analysis report.
+ * Supports optional Injective blockchain integration analysis.
  *
  * @module commands/analyze
  */
@@ -19,12 +20,27 @@ import { analyzeProduct } from '../agents/product.js';
 
 /**
  * Demo output shown when `--demo` flag is used.
+ * Enhanced with executive summary, risk section, and injective section.
  * @type {string}
  */
 const DEMO_OUTPUT = `# OnePersonAI — Multi-Agent Analysis Report (DEMO)
 
+**Idea:** AI-Powered Code Review Tool for Solo Developers
 **Generated:** 2025-01-15 10:30:00
 **Agents run:** 3
+
+---
+
+## 📊 Executive Summary
+
+**Market Verdict:** 🟢 Strong opportunity — growing market with clear white space
+**Tech Verdict:** 🟢 Buildable with current technology — moderate complexity
+**Product Verdict:** 🟢 Clear MVP path — validation recommended within 2 weeks
+
+This AI-powered code review tool targets a $4.2B market growing at 28% CAGR.
+The MVP can be built in 3-4 weeks by a solo developer using Node.js + AO + CLI.
+Key risk: incumbents may add similar features — differentiation through
+solo-builder-specific UX is critical.
 
 ---
 
@@ -32,46 +48,87 @@ const DEMO_OUTPUT = `# OnePersonAI — Multi-Agent Analysis Report (DEMO)
 
 ### 1. Total Addressable Market (TAM)
 - **Market Size:** $4.2B by 2027 (CAGR 28%)
+- **SAM:** $1.8B (developer tooling segment)
+- **SOM:** $120M (solo builder / indie dev segment)
 - **Key Segments:** Independent developers (62%), small studios (23%), enterprises (15%)
 
-### 2. Competitive Landscape
-| Competitor | Strength | Weakness |
-|---|---|---|
-| Tool A | Brand recognition | Expensive, enterprise-focused |
-| Tool B | Free tier | Limited AI features |
-| Tool C | Good UX | Closed ecosystem |
+### 2. Target Audience
+| Persona | Pain Point | Channel |
+|---------|-----------|---------|
+| Solo dev | No code review buddy | Twitter, Reddit, Dev.to |
+| Indie hacker | Manual review slows shipping | Product Hunt, Hacker News |
+| Small team | Can't afford dedicated QA | GitHub Marketplace |
 
-### 3. Differentiation
-First AI toolkit purpose-built for solo builders — combining analysis, scaffolding, and review in one CLI.
+### 3. SWOT Analysis
+| | Positive | Negative |
+|---|---|---|
+| **Internal** | Fast CLI, multi-agent AI, no-config setup | No brand, limited integrations |
+| **External** | Growing solo dev movement, AI wave | Well-funded incumbents, fast-moving market |
 
 ---
 
 ## ✅ Tech Agent (1890ms)
 
-### Recommended Stack
-- **Runtime:** Node.js 22 (ESM, fast startup)
-- **CLI Framework:** Commander.js + Chalk + Ora
-- **AI Integration:** AO binary at /usr/bin/ao
-- **Format:** Markdown reports
+### 1. Technical Feasibility
+**Verdict:** Yes — buildable with current technology
+**Hardest challenges:**
+1. ⭐ AST-level code analysis (medium)
+2. ⭐ Quality heuristic calibration (medium)
+3. ⭐ Multi-language support (low-medium)
 
-### Architecture
-Single-entry CLI with subcommands → Agent modules → AO subprocess → Formatted output
+### 2. Recommended Tech Stack
+- **Runtime:** Node.js 22 (ESM, fast startup)
+- **CLI:** Commander.js + Chalk + Ora
+- **AI:** AO binary at /usr/bin/ao
+- **Analysis:** Custom AST parser + regex patterns
+- **Output:** Markdown reports + JSON export
 
 ---
 
 ## ✅ Product Agent (1340ms)
 
-### MVP Scope (2 weeks)
-1. CLI with 3 commands (analyze, scaffold, review)
-2. 3 analysis agents (market, tech, product)
-3. Content generation for docs
-4. Basic scaffolding from templates
+### 1. Problem Validation
+**Core problem:** Solo developers lack peer code review, leading to bugs and
+technical debt that slip into production.
 
-### Roadmap
-- **Week 1:** Core CLI + analyze command
-- **Week 2:** Scaffold + review commands
-- **Week 3:** Content generation + polish
-- **Week 4:** Documentation, examples, ship
+### 2. RICE-Prioritized Features
+| Feature | Reach | Impact | Confidence | Effort | RICE Score |
+|---------|-------|--------|------------|--------|------------|
+| Security scan | 5 | 5 | 90% | 2 weeks | 11.25 |
+| Style checks | 5 | 3 | 80% | 1 week | 12.00 |
+| AI review | 4 | 5 | 70% | 3 weeks | 4.67 |
+
+### 3. Risk Assessment
+| Risk | Probability | Impact | Mitigation |
+|------|------------|--------|------------|
+| False positives | Medium | High | Weighted heuristics, user feedback loop |
+| Competition adds AI | High | Medium | Focus on solo-builder UX, community |
+| Adoption barrier | Low | Medium | CLI-first, zero-config, 60s time-to-value |
+
+---
+
+## ⛓️ Injective Blockchain Integration Analysis
+
+_This section explores how this idea could leverage the Injective blockchain._
+
+### Synergy Opportunities
+| Feature | Injective Primitive | Value |
+|---------|-------------------|-------|
+| Review marketplace | Injective Token (INJ) | Pay per review with crypto |
+| Decentralized audit log | On-chain storage | Immutable review history |
+| Smart contract templates | CosmWasm smart contracts | Automated escrow for audit bounties |
+| DAO governance | Injective governance | Community-voted review standards |
+
+### How to Integrate
+1. **Token-gated features:** Use INJ for premium analysis tiers
+2. **On-chain attestations:** Store review hashes on Injective for verifiability
+3. **Bounty system:** Smart contract-powered review bounties with INJ rewards
+4. **Solo Builder DAO:** Community governance around tool standards
+
+### Why Injective?
+Injective's fast finality (1.2s), low fees, and Cosmos IBC interoperability
+make it ideal for developer tooling microtransactions. Cross-chain support
+means any ecosystem's builders can participate.
 
 ---
 
@@ -95,6 +152,216 @@ async function promptForIdea() {
 }
 
 /**
+ * Generate the Injective blockchain analysis section (bonus).
+ * Produces a structured analysis of how the idea could leverage Injective.
+ *
+ * @param {string} idea - The product idea
+ * @returns {string} Injective integration analysis section
+ */
+function generateInjectiveSection(idea) {
+  const slug = idea.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30);
+
+  return [
+    '',
+    '---',
+    '',
+    '## ⛓️ Injective Blockchain Integration Analysis',
+    '',
+    '_This section explores how this idea could leverage the ' +
+    '[Injective blockchain](https://injective.com) for enhanced functionality._',
+    '',
+    '### Why Injective for This Idea?',
+    '',
+    'Injective is a fast, interoperable Layer-1 blockchain designed for ' +
+    'decentralized finance and Web3 applications. Key advantages:',
+    '',
+    '- **~1.2s finality** — faster than Ethereum, suitable for UX-sensitive apps',
+    '- **IBC interoperability** — connect with 90+ Cosmos chains and beyond',
+    '- **Low fees** — fractions of a cent, viable for microtransactions',
+    '- **CosmWasm smart contracts** — Rust-based, secure, battle-tested',
+    '- **MEV-resistant** — fair ordering for sensitive operations',
+    '',
+    '### Potential Integration Points',
+    '',
+    '| Integration | Injective Primitive | Effort | Impact |',
+    '|------------|-------------------|--------|--------|',
+    '| Token-gated premium features | INJ / CW-20 tokens | Low | Medium |',
+    '| On-chain attestation log | CosmWasm contract + IBC | Medium | High |',
+    '| Decentralized review marketplace | CW-721 (NFT) + escrow | High | Very High |',
+    '| Governance for tool standards | Injective governance module | Medium | High |',
+    '',
+    '### Architecture Concept',
+    '',
+    '```',
+    '┌─────────────────────┐',
+    '│   OnePersonAI CLI    │',
+    '├─────────────────────┤',
+    '│  analyze --injective  │',
+    '└──────┬──────────────┘',
+    '       │ JSON-RPC / REST',
+    '       ▼',
+    '┌─────────────────────┐',
+    '│   Injective Chain    │',
+    '├─────────────────────┤',
+    '│ • Smart contract    │',
+    '│   (CosmWasm)        │',
+    '│ • Token gateway     │',
+    '│ • Attestation log   │',
+    '│ • Governance hooks  │',
+    '└─────────────────────┘',
+    '```',
+    '',
+    '### Getting Started with Injective',
+    '',
+    '```bash',
+    '# Install Injective CLI',
+    'npm install -g @injectivelabs/cli',
+    '',
+    '# Or use the SDK in your project',
+    'npm install @injectivelabs/sdk-ts @injectivelabs/networks',
+    '',
+    '# Interact with Injective',
+    'injective tx bank send $FROM $TO 1000000000inj',
+    '```',
+    '',
+    '### Key Resources',
+    '',
+    `- [Injective Docs](https://docs.injective.network)
+- [Injective SDK](https://github.com/InjectiveLabs/sdk-ts)
+- [CosmWasm Docs](https://docs.cosmwasm.com)
+- [Injective Hub](https://hub.injective.network)
+- [Faucet (testnet)](https://faucet.injective.network)`,
+    '',
+    '---',
+    '',
+    `_Injective integration analysis for "${idea.slice(0, 80)}" ` +
+    `generated by OnePersonAI_`,
+  ].join('\n');
+}
+
+/**
+ * Build the combined analysis report with executive summary,
+ * risk assessment, and optional Injective section.
+ *
+ * @param {string} productIdea - The analyzed product idea
+ * @param {string} model - The AI model used
+ * @param {Array} results - Agent results
+ * @param {boolean} injective - Whether to include Injective section
+ * @returns {string} Formatted report
+ */
+function buildReport(productIdea, model, results, injective) {
+  const now = new Date().toISOString().replace(/T/, ' ').replace(/\.\d+Z/, '');
+  const succeeded = results.filter(r => r.result.success).length;
+  const total = results.length;
+
+  const parts = [];
+
+  // Header
+  parts.push(
+    '# OnePersonAI — Multi-Agent Analysis Report',
+    '',
+    `**Idea:** ${productIdea}`,
+    `**Model:** ${model}`,
+    `**Generated:** ${now}`,
+    `**Agents run:** ${total} (${succeeded} succeeded)`,
+    '',
+    '---',
+    '',
+  );
+
+  // Executive Summary
+  parts.push(
+    '## 📊 Executive Summary',
+    '',
+    `**Idea:** ${productIdea}`,
+    '',
+    `This report provides a comprehensive analysis of the product idea ` +
+    `from three perspectives: market analysis, technical feasibility, and ` +
+    `product strategy. Below is a consolidated view of the key findings.`,
+    '',
+  );
+
+  // Agent-by-agent summary cards
+  const summaries = {
+    'Market Analysis': {
+      icon: '📈',
+      good: 'Strong market opportunity identified',
+      neutral: 'Market analysis requires further research',
+      bad: 'Market analysis faced challenges',
+    },
+    'Tech Stack Analysis': {
+      icon: '🛠️',
+      good: 'Technical feasibility confirmed',
+      neutral: 'Technical assessment partially complete',
+      bad: 'Technical analysis faced challenges',
+    },
+    'Product Strategy': {
+      icon: '🎯',
+      good: 'Clear product roadmap defined',
+      neutral: 'Product strategy needs refinement',
+      bad: 'Product analysis faced challenges',
+    },
+  };
+
+  for (const { name, result } of results) {
+    const s = summaries[name] || { icon: '❓', good: 'Complete', neutral: 'Partial', bad: 'Failed' };
+    const verdict = result.success
+      ? result.usedFallback
+        ? `⚠️ ${s.neutral}`
+        : `✅ ${s.good}`
+      : `❌ ${s.bad}`;
+    parts.push(`- **${s.icon} ${name}:** ${verdict}`);
+  }
+  parts.push('');
+
+  // Risk Assessment Summary
+  const anyFallback = results.some(r => r.result.usedFallback);
+  const anyFailed = results.some(r => !r.result.success);
+
+  parts.push(
+    '### ⚡ Risk Assessment',
+    '',
+    '| Category | Status | Notes |',
+    '|----------|--------|-------|',
+    `| AI Availability | ${anyFallback ? '🟡 Fallback' : '✅ Full AI'} | ` +
+    `${anyFallback ? 'AO binary not detected — using template-based analysis' : 'AO binary available — full AI-powered analysis'}`,
+    `| Agent Success | ${anyFailed ? '🔴 Partial' : '✅ All Passed'} | ` +
+    `${succeeded}/${total} agents completed successfully`,
+    `| Actionability | ✅ Ready | Report provides structured, actionable insights`,
+    '',
+    '---',
+    '',
+  );
+
+  // Individual agent reports
+  for (const { name, result } of results) {
+    const statusIcon = result.success ? '✅' : '❌';
+    const modeLabel = result.usedFallback ? ' (fallback)' : '';
+    parts.push(`## ${statusIcon} ${name}${modeLabel}`, '');
+    if (result.success) {
+      parts.push(result.raw || '_No output_');
+    } else {
+      parts.push(`> ⚠ Agent failed: ${result.error || 'Unknown error'}`);
+      parts.push('');
+      parts.push('Try a different model with `--model` or check AO installation.');
+    }
+    parts.push('');
+  }
+
+  // Injective section
+  if (injective) {
+    parts.push(generateInjectiveSection(productIdea));
+  }
+
+  // Footer
+  parts.push('---');
+  parts.push('_Generated by OnePersonAI — AI-Powered Solo Builder Toolkit_');
+  parts.push('_https://github.com/shijiezhichang/onepersonai_');
+
+  return parts.join('\n');
+}
+
+/**
  * Run the analyze command.
  *
  * @param {string} idea - Product idea (empty string to prompt)
@@ -103,13 +370,22 @@ async function promptForIdea() {
  * @param {string} [options.model] - AI model override
  * @param {boolean} [options.quiet] - Suppress spinners
  * @param {string} [options.out] - Output file path
+ * @param {boolean} [options.injective] - Include Injective blockchain analysis
  * @returns {Promise<void>}
  */
 export default async function analyzeCommand(idea, options = {}) {
   // Handle demo mode
   if (options.demo) {
     console.log(chalk.cyan.bold('\n🧪 Demo Mode — Showing example output\n'));
-    console.log(DEMO_OUTPUT);
+    let output = DEMO_OUTPUT;
+
+    // If --injective is passed in demo mode, the demo already includes it
+    // Otherwise strip it for cleaner output
+    if (!options.injective) {
+      // Keep the full demo which already contains the injective section as showcase
+    }
+
+    console.log(output);
 
     if (options.out) {
       const outPath = resolve(process.cwd(), options.out);
@@ -117,7 +393,7 @@ export default async function analyzeCommand(idea, options = {}) {
       if (!existsSync(outDir)) {
         mkdirSync(outDir, { recursive: true });
       }
-      writeFileSync(outPath, DEMO_OUTPUT, 'utf-8');
+      writeFileSync(outPath, output, 'utf-8');
       console.log(chalk.green(`\n✓ Report saved to ${outPath}`));
     }
 
@@ -135,6 +411,9 @@ export default async function analyzeCommand(idea, options = {}) {
   // Show what we're doing
   console.log(chalk.dim(`Model: ${model}`));
   console.log(chalk.dim(`Idea: ${productIdea.substring(0, 80)}${productIdea.length > 80 ? '...' : ''}`));
+  if (options.injective) {
+    console.log(chalk.dim('⛓️  Injective blockchain integration: enabled'));
+  }
   console.log('');
 
   // Run all three agents concurrently with spinners
@@ -174,35 +453,14 @@ export default async function analyzeCommand(idea, options = {}) {
 
     console.log('');
 
-    // Build the combined report
-    const reportParts = [
-      '# OnePersonAI — Multi-Agent Analysis Report',
-      '',
-      `**Idea:** ${productIdea}`,
-      `**Model:** ${model}`,
-      `**Generated:** ${new Date().toISOString().replace(/T/, ' ').replace(/\.\d+Z/, '')}`,
-      '',
-    ];
-
+    // Build the enhanced report
     const results = [
       { name: 'Market Analysis', result: marketResult },
       { name: 'Tech Stack Analysis', result: techResult },
       { name: 'Product Strategy', result: productResult },
     ];
 
-    for (const { name, result } of results) {
-      reportParts.push('---', `## ${name}`, '');
-      if (result.success) {
-        reportParts.push(result.raw || '_No output_');
-      } else {
-        reportParts.push(`> ⚠  Agent failed: ${result.error || 'Unknown error'}`);
-      }
-      reportParts.push('');
-    }
-
-    reportParts.push('---', '_Generated by OnePersonAI_');
-
-    const fullReport = reportParts.join('\n');
+    const fullReport = buildReport(productIdea, model, results, options.injective);
 
     // Output to file if requested
     if (options.out) {

@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Node.js ${{ matrix.node-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+      fail-fast: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run lint (syntax check)
+        run: node --check bin/onepersonai.js && node --check src/index.js
+
+      - name: Check CLI loads
+        run: node bin/onepersonai.js --help
+
+      - name: Run demo mode
+        run: node bin/onepersonai.js analyze --demo
+
+      - name: Run self-review
+        run: node bin/onepersonai.js review .
+
+      - name: Run tests
+        run: npm test
+
+      - name: Check scaffold command
+        run: |
+          mkdir -p /tmp/test-scaffold
+          cd /tmp/test-scaffold
+          node /home/a/OnePersonAI/bin/onepersonai.js scaffold test-project --name test-project --template cli-tool --force
+          ls -la
+          node -e "const p = require('./test-project/package.json'); console.log('✓ Package:', p.name);"

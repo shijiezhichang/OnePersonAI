@@ -9,8 +9,10 @@
   "type": "module",
   "scripts": {
     "start": "node bin/onepersonai.js",
-    "test": "node --experimental-vm-modules node_modules/.bin/jest",
-    "demo": "node bin/onepersonai.js analyze --demo"
+    "test": "node --test test/*.test.js",
+    "demo": "node bin/onepersonai.js analyze --demo",
+    "review": "node bin/onepersonai.js review .",
+    "check": "node --check bin/onepersonai.js && node --check src/index.js"
   },
   "keywords": ["ai", "solo-builder", "agent", "orchestrator", "productivity"],
   "license": "MIT",

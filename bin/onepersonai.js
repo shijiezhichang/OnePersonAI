@@ -62,6 +62,7 @@ program
   .option('-m, --model <model>', 'AI model to use (default: from config)')
   .option('-o, --out <file>', 'Save report to file')
   .option('-q, --quiet', 'Suppress output (use with --out)')
+  .option('--injective', 'Include Injective blockchain integration analysis')
   .action(async (ideaWords, cmdOptions) => {
     const idea = ideaWords ? ideaWords.join(' ') : '';
     try {
@@ -71,6 +72,7 @@ program
         model: cmdOptions.model || undefined,
         out: cmdOptions.out || undefined,
         quiet: cmdOptions.quiet || false,
+        injective: cmdOptions.injective || false,
       });
     } catch (err) {
       console.error(chalk.red(`\n✗ analyze command failed: ${err.message}`));
