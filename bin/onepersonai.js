@@ -63,6 +63,7 @@ program
   .option('-o, --out <file>', 'Save report to file')
   .option('-q, --quiet', 'Suppress output (use with --out)')
   .option('--injective', 'Include Injective blockchain integration analysis')
+  .option('--pro', 'Enable Pro mode — deeper analysis with additional agent rounds, cross-referencing, and extended output')
   .action(async (ideaWords, cmdOptions) => {
     const idea = ideaWords ? ideaWords.join(' ') : '';
     try {
@@ -73,6 +74,7 @@ program
         out: cmdOptions.out || undefined,
         quiet: cmdOptions.quiet || false,
         injective: cmdOptions.injective || false,
+        pro: cmdOptions.pro || false,
       });
     } catch (err) {
       console.error(chalk.red(`\n✗ analyze command failed: ${err.message}`));

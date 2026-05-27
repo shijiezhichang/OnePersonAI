@@ -37,7 +37,8 @@ npm start -- review
 
 | Command | Description | Injective Integration |
 |---------|-------------|---------------------|
-| `analyze` | 🧪 Run any product idea through 3 AI agents (market, tech, product) simultaneously | ⛓️ Optional `--injective` flag adds blockchain integration analysis |
+| `analyze` | 🧪 Run any product idea through 3 AI agents (market, tech, product) simultaneously | ⛓️ Optional `--injective` flag adds live blockchain data integration |
+| | | 🚀 Optional `--pro` flag enables extended deep-dive analysis with cross-referencing |
 | `scaffold` | 🏗️ Generate complete project structure from a plan or template | — |
 | `review` | 📋 Self-review code for quality, security, and structural issues | — |
 
@@ -97,6 +98,9 @@ npm start -- analyze "Decentralized code review marketplace" --injective
 
 # Save report to file
 npm start -- analyze "AI code reviewer" --out report.md
+
+# Enable Pro Mode for deeper cross-reference analysis
+npm start -- analyze "SaaS for freelancers" --pro
 
 # Use a specific model (requires AO)
 npm start -- analyze "SaaS for freelancers" --model claude-3-opus
@@ -263,8 +267,9 @@ const msg = MsgSend.fromJSON({
 | **CLI UX** | [Chalk](https://github.com/chalk/chalk) + [Ora](https://github.com/sindresorhus/ora) |
 | **Prompts** | [Inquirer](https://github.com/SBoudrias/Inquirer.js) |
 | **AI Engine** | AO binary (optional, graceful fallback) |
-| **Analytical Frameworks** | SWOT, Porter's Five Forces, RICE scoring |
-| **Blockchain** | Injective (`--injective` flag) |
+| **Analytical Frameworks** | SWOT, Porter's Five Forces, RICE scoring, Risk scoring |
+| **Blockchain** | Injective (`--injective` flag) — live RPC data from mainnet |
+| **Pro Mode** | Extended analysis with cross-reference synthesis (`--pro` flag) |
 | **Testing** | Node.js native test runner |
 | **CI/CD** | GitHub Actions |
 | **Output Format** | Markdown reports |
@@ -346,10 +351,11 @@ Key design decisions that set this submission apart:
 
 - **3 AI agents** running concurrently — market, tech, and product analysis
 - **Executive Summary** with verdicts and risk assessment matrix
-- **Injective blockchain integration** — `--injective` flag generates a bonus analysis section
+- **Injective blockchain integration** — `--injective` flag fetches LIVE data from Injective mainnet via public RPC endpoints (block height, validator count, token supply)
+- **Pro Mode** — `--pro` flag enables extended cross-reference synthesis with multi-round analysis, demonstrating that the tool scales with complexity
 - **Self-reviewing** — the `review` command audits its own codebase
 - **Graceful degradation** — full AI analysis with AO, smart fallbacks without
-- **Professional analytical frameworks** — SWOT, Porter's Five Forces, RICE scoring
+- **Professional analytical frameworks** — SWOT, Porter's Five Forces, RICE scoring, Pro-level risk matrices
 
 ---
 
